@@ -10,7 +10,7 @@ class coDB
     public function __construct()
     {
         try {
-            $this->_db = new PDO('mysql:dbname=CV;host=localhost', 'root', 'root');
+            $this->_db = new PDO('mysql:dbname=Wikynov;host=localhost', 'root', 'root');
             $this->_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->_db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
         } catch (PDOException $pe) {
