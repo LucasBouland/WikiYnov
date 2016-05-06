@@ -1,19 +1,11 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Pierre
+ * User: Schmurf
  * Date: 04/05/2016
- * Time: 09:26
- */
+ * Time: 09:58
+ */?>
 
-require "controllers/connexion.php";
-if(isset($user)) {
-    var_dump($user);
-}
-
-?>
-
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,15 +15,13 @@ if(isset($user)) {
 <body>
 <div>
     <form method="post" action="">
-        <input type="pseudo" required name="mail" class="form-control input-sm chat-input"
+        <input type="email" required name="mail" class="form-control input-sm chat-input"
                placeholder="Adresse mail"/>
         <input type="password" required name="mdp" class="form-control input-sm chat-input"
                placeholder="Password"/>
-        <br>
         <button type="submit" >Connexion</button>
     </form>
+<!--    <p name="incorrect" style="visibility: hidden">email ou mot de passe incorrect</p>-->
 </div>
 </body>
 </html>
-=======
->>>>>>> refs/remotes/origin/Pierre
