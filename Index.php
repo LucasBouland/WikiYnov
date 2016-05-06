@@ -8,13 +8,12 @@
          */
 
     session_start();
-    var_dump( $_SESSION["user"]);
 
             if (!isset($_SESSION["user"])) {
                 header("Location: ./controllers/connexion.php");
 
             } else if (isset($_SESSION["user"])) {
-                header("Location: ./views/Acceuil.php");
+                header("Location: ./views/Profil.php");
             }
 
 
