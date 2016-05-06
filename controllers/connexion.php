@@ -20,6 +20,6 @@ if(!empty($_POST['mail']) && !empty($_POST['mdp'])){
         $user = new User($data[0]->id_user,$data[0]->name,$data[0]->last_name,$data[0]->job,$data[0]->password,$data[0]->email);
         session_start();
     }
-    else "email ou mot de passe incorrect"
+    else "email ou mot de passe incorrect";
     //document.getElementById(MatFabrication).style.visibility=(true)?'visible':'visible';
 }
