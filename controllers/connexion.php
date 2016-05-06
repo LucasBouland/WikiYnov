@@ -19,7 +19,7 @@ if(!empty($_POST['mail']) && !empty($_POST['mdp'])){
         $user = new User($data[0]->id_user,$data[0]->name,$data[0]->last_name,$data[0]->job,$data[0]->password,$data[0]->email);
         $_SESSION['user'] = $user;
 
-        header("Location: ../Index.php");
+        header("Location: ../index.php");
     }
     else "email ou mot de passe incorrect";
     //document.getElementById(MatFabrication).style.visibility=(true)?'visible':'visible';
