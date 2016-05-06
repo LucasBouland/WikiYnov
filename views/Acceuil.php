@@ -10,6 +10,5 @@ session_destroy();
 ?>
 
 
-test
 
 

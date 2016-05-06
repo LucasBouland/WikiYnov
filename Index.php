@@ -11,10 +11,10 @@
     var_dump( $_SESSION["user"]);
 
             if (!isset($_SESSION["user"])) {
-                header("Location: http://localhost/PHP/WikYnov/controllers/connexion.php");
+                header("Location: ./controllers/connexion.php");
 
             } else if (isset($_SESSION["user"])) {
-                header("Location: http://localhost/PHP/WikYnov/views/Acceuil.php");
+                header("Location: ./views/Acceuil.php");
             }
 
 
