@@ -27,5 +27,7 @@ $user = $_SESSION['user'];
     <br>
 
     <a href="../Index.php">Retour page d'accueil</a>
+    <br>
+    <a href="../controllers/Logout.php">deconnexion</a>
 
 </div>

@@ -10,6 +10,8 @@ session_start();
 page accueil
 <br>
 <a href="../views/Profil.php">Profil</a>
+<br>
+<a href="../controllers/Logout.php">deconnexion</a>
 
 
 
