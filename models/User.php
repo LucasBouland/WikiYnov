@@ -1,5 +1,5 @@
 <?php
-require 'core/Database.php';
+require '../core/Database.php';
 class User
 {
     private $_id,
