@@ -21,6 +21,8 @@
                placeholder="Password"/>
         <button type="submit" >Connexion</button>
     </form>
+    <br>
+    <a href="../views/Registration.php">S'inscrire</a>
 <!--    <p name="incorrect" style="visibility: hidden">email ou mot de passe incorrect</p>-->
 </div>
 </body>
