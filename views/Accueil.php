@@ -6,9 +6,10 @@
  * Time: 09:51
  */
 session_start();
-session_destroy();
 ?>
-
+page accueil
+<br>
+<a href="../views/Profil.php">Profil</a>
 
 
 

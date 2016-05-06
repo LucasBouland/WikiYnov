@@ -13,7 +13,7 @@
                 header("Location: ./controllers/connexion.php");
 
             } else if (isset($_SESSION["user"])) {
-                header("Location: ./views/Profil.php");
+                header("Location: ./views/Accueil.php");
             }
 
 
