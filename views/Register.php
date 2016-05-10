@@ -8,7 +8,7 @@
 
 <h1>S'inscire</h1>
 
-<form method="post" action="../controllers/Register.php">
+<form method="post" action="">
     <div>
         <p>
             Prénom:
@@ -36,8 +36,9 @@
             <br>
             <input type="password" name="confmdp" required placeholder="Retapez votre mot de passe">
         </p>
-            <input type="hidden" name="job" value = "abonne" readonly>
-            <input type="hidden" name="connected" value = "0" readonly>
             <button type="submit">Inscription</button>
     </div>
+
+
+    <a href="../WikYnov/index.php?c=users&a=connexion">Page de connexion</a>
 </form>

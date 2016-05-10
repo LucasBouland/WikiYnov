@@ -1,5 +1,7 @@
 <?php
-require '../core/Database.php';
+require 'core/Database.php';
+require 'core/coDB.php';
+
 class User
 {
     private $_id,
@@ -8,7 +10,6 @@ class User
         $_job,
         $_password,
         $_email;
-
 
     /**
      * User constructor.
@@ -28,31 +29,75 @@ class User
         $this->_password = $_password;
         $this->_email = $_email;
     }
-    public function create(){
+    /* crée un nouvel utilisateur dans la DB */
+    public static function create($name,$last_name,$email,$password)
+    {
+        $db = new coDB();
+        $job = "abonne";
+        $connected = 0; // verifier si necessaire
         $sql = "INSERT INTO users
                 SET name = :name,
-                first_name = :first_name,
+                last_name = :last_name,
                 password = :password,
-                email = :email";
-        Database::exec($sql, [
-            ':name' => $this->_name,
-            ':first_name' => $this->_first_name,
-            ':job' => $this->_job,
-            ':password' => $this->_password,
-            ':email' => $this->_email
-        ]);
+                email = :email,
+                job = :job,
+                connected = :connected";
+        $stmt= $db->prepare($sql);
+        $stmt->bindParam(':name',$name,PDO::PARAM_STR,255);
+        $stmt->bindParam(':last_name',$last_name,PDO::PARAM_STR,255);
+        $stmt->bindParam(':password',$password,PDO::PARAM_STR,255);
+        $stmt->bindParam(':email',$email,PDO::PARAM_STR,255);
+        $stmt->bindParam(':job',$job,PDO::PARAM_STR,255);
+        $stmt->bindParam(':connected',$connected,PDO::PARAM_STR,255);
+        $stmt->execute();
+
+    }
+    /* vérifie si l'adresse mail est déja enregistrée*/
+    public static function exists($email, $password)
+    {
+        $db = new coDB();
+        $exist = 'SELECT COUNT(id_user) FROM users WHERE email = :mail AND password = :pwd';
+        $stmt = $db->prepare($exist);
+        $stmt->bindParam(':mail',$email,PDO::PARAM_STR,255);
+        $stmt->bindParam(':pwd',$password,PDO::PARAM_STR,255);
+        $stmt->execute();
+        $count = $stmt->fetchColumn();
+       return $count;
+    }
+
+    /* verifie si l'adresse mail a déja été enregistrée */
+     public static function checkAvailable($email)
+    {
+        $db = new coDB();
+        $exist = 'SELECT COUNT(email) FROM users WHERE email = :mail ';
+        $stmt = $db->prepare($exist);
+        $stmt->bindParam(':mail',$email,PDO::PARAM_STR,255);
+        $stmt->execute();
+        $count = $stmt->fetchColumn();
+        var_dump($count);
+        return $count;
+    }
+    /* cherche un utilisateur par son adresse mail + mdp */
+    public static function findByCredentials($email, $password)
+    {
+        $db = new coDB();
+        $data = $db->pdo_query('SELECT * FROM users WHERE email = ? AND password = ?;', [$email, $password]);
+        $user = new User($data[0]->id_user, $data[0]->name, $data[0]->last_name, $data[0]->job, $data[0]->password, $data[0]->email);
+        return $user;
     }
     public function update(){
         // Update
     }
+    
     public function delete(){
         // delete
     }
+    /* cherche un utilisateur par son id_user */
     public static function findById($id){
-        $sql = "SELECT * FROM users WHERE id = ?";
-        $user = Database::fetch($sql, [$id]);
-        return new User($user->id, $user->name,
-            $user->first_name, $user->password, $user->email);
+        $db = new coDB();
+        $data = $db->pdo_query('SELECT * FROM users WHERE id_user = ? ', [$id]);
+        $user = new User($data[0]->id_user, $data[0]->name, $data[0]->last_name, $data[0]->job, $data[0]->password, $data[0]->email);
+        return new $user;
     }
     /**
      * @return mixed

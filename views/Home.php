@@ -5,12 +5,21 @@
  * Date: 06/05/2016
  * Time: 09:51
  */
-session_start();
+if (isset($_SESSION['LoggedIn']) == true)
+{
+
+}
+else
+{
+   // header("Location: ../index.php");
+}
+var_dump($_SESSION['user']);
+
 ?>
 page accueil
 <br>
-<a href="../views/Profil.php">Profil</a>
+<a href="../WikYnov/index.php?c=users&a=profil">Profil</a>
 <br>
-<a href="../controllers/Logout.php">deconnexion</a>
+<a href="../WikYnov/index.php?c=users&a=logout">deconnexion</a>
 
 

@@ -1,16 +1,9 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Schmurf
- * Date: 04/05/2016
- * Time: 09:58
- */?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Connexion</title>
 </head>
 <body>
 <div>
@@ -22,7 +15,7 @@
         <button type="submit" >Connexion</button>
     </form>
     <br>
-    <a href="../views/Registration.php">S'inscrire</a>
+    <a href="../WikYnov/index.php?c=users&a=register">S'inscrire</a>
 <!--    <p name="incorrect" style="visibility: hidden">email ou mot de passe incorrect</p>-->
 </div>
 </body>
