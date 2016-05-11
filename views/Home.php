@@ -14,12 +14,11 @@ else
    // header("Location: ../index.php");
 }
 var_dump($_SESSION['user']);
-
 ?>
 page accueil
 <br>
-<a href="../WikYnov/index.php?c=users&a=profil">Profil</a>
+<a href="../../index.php?c=users&a=profil">Profil</a>
 <br>
-<a href="../WikYnov/index.php?c=users&a=logout">deconnexion</a>
+<a href="../../index.php?c=users&a=logout">deconnexion</a>
 
 

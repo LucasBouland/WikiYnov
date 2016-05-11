@@ -1,5 +1,4 @@
 <?php
-require 'core/Database.php';
 require 'core/coDB.php';
 
 class User
@@ -74,7 +73,6 @@ class User
         $stmt->bindParam(':mail',$email,PDO::PARAM_STR,255);
         $stmt->execute();
         $count = $stmt->fetchColumn();
-        var_dump($count);
         return $count;
     }
     /* cherche un utilisateur par son adresse mail + mdp */

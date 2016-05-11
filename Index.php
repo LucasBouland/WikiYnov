@@ -30,7 +30,6 @@ if(!empty($_GET['c']) && !empty($_GET['a'])){
         $c  = new $controller;
         call_user_func([$c, $action]);
     }
-
 }
 else
 {

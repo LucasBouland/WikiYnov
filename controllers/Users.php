@@ -12,6 +12,8 @@ class Users
             $password = $_POST["mdp"];
             if (User::exists($email, $password)) {
                 $user = User::findByCredentials($email, $password);
+                $_SESSION['user'] = $user;
+                $_SESSION['LoggedIn'] = true;
                 var_dump($_SESSION['user']); // objet, est perdu apres?? (1)
 // header("Location: ../index.php?c=users&a=home");
 
@@ -40,7 +42,7 @@ class Users
     /* redirection page d'accueil*/
     public function home()
     {
-        var_dump($_SESSION['user']); // ici l'objet est perdu -> object(__PHP_Incomplete_Class) (3)
+       // var_dump($_SESSION['user']); // ici l'objet est perdu -> object(__PHP_Incomplete_Class) (3)
         require 'views/Home.php';
 
     }
@@ -51,12 +53,10 @@ class Users
         require 'views/users/connexion.php';
         header("Location: index.php?c=users&a=connexion");
     }
-    /* RAJOUTER SIGN UP ET LOGOUT EN FONCTION ICI */
 
     public function register()
     {
         require 'views/Register.php';
-        $db = new coDB();
 
         if (!empty($_POST['nom']) && !empty($_POST['prenom']) && !empty($_POST['email']) && !empty($_POST['mdp']) && !empty($_POST['confmdp'])) {
             if ($_POST['confmdp'] == $_POST['mdp']) {
@@ -72,7 +72,6 @@ class Users
                         return;
                     }
                 }
-
                 if (strlen($_POST['mdp']) > 8)
                 {
                     $alreadyExist = User::checkAvailable($_POST['email']);
@@ -92,7 +91,6 @@ class Users
                 {
                     echo "echec, mot de passe 8 lettres minimum";
                 }
-
             }
             else {
                 echo 'Echec de l\'inscription:les champs mot de passe et Confirmation mot de passe ne sont pas les mêmes.';
@@ -100,6 +98,5 @@ class Users
         } else {
             echo 'Echec de l\'inscription: vous avez omis un champs.';
         }
-
     }
 }
