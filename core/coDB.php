@@ -18,18 +18,18 @@ class coDB
         }
     }
 
-    function prepare($req){
-        return$this->_db->prepare($req);
+    public function prepare($req){
+        return $this->_db->prepare($req);
     }
 
-    function pdo_query($req, $data = [], $fetch = true)
+    public function pdo_query($req, $data = [], $fetch = true)
     {
         $stmt = $this->_db->prepare($req);
         $stmt->execute($data);
         return ($fetch) ? $stmt->fetchAll() : true;
     }
 
-    function pdo_exec($req, $data = [])
+    public function pdo_exec($req, $data = [])
     {
         $stmt = $this->_db->prepare($req);
         $stmt->execute($data);

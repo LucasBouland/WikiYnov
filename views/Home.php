@@ -5,12 +5,15 @@
  * Date: 06/05/2016
  * Time: 09:51
  */
-session_start();
+if (!isset($_SESSION['LoggedIn'])) {
+
+    header('Location: /WikYnov/index');
+    return;
+}
+
 ?>
 page accueil
 <br>
-<a href="../views/Profil.php">Profil</a>
+<a href="profil/<?= $_SESSION['id'];?>">Profil</a>
 <br>
-<a href="../controllers/Logout.php">deconnexion</a>
-
-
+<a href="logout">deconnexion</a>
