@@ -1,37 +1,34 @@
 <?php
-
-/**
- * Created by PhpStorm.
- * User: Pierre
- * Date: 04/05/2016
- * Time: 09:26
- */
-
+error_reporting(E_ALL);
+ini_set("display_error",1);
 session_start();
 
-/*
-if (!isset($_SESSION["user"])) {
-    header("Location: ./controllers/connexion.php");
+require_once 'vendor/autoload.php';
 
-} else if (isset($_SESSION["user"])) {
-    header("Location: ./views/Home.php");
-}
-*/
-/* */
-if(!empty($_GET['c']) && !empty($_GET['a'])){
-    $controller = ucfirst($_GET['c']); // UpperCasefirst, met la 1ere lettre en MAJ
-    $action = $_GET['a'];
+require_once 'AltoRouter.php';
 
-    // RISQUE DE FAILLE
-    $file = 'controllers/' . $controller . '.php';
-    /* fait un require avec c = class et a = fonction, routing via index? */
-    if(file_exists($file)){
-        require $file;
-        $c  = new $controller;
-        call_user_func([$c, $action]);
-    }
+require_once 'controllers/Users.php';
+
+require_once 'models/User.php';
+
+$db = new coDB();
+$router = new AltoRouter();
+$router->setBasePath('/WikYnov');
+
+$router->map('GET','/', function() { require_once 'views/users/connexion.php';});
+$router->map('POST','/connexion', function(){ $user = new Users(); $user->connexion();});
+$router->map('GET', '/register', function() {Users::signup();});
+$router->map('POST', '/z', function() {$user = new Users(); $user->register();});
+$router->map('GET', '/Home', function() {Users::home();});
+$router->map('GET', '/profil', function() {Users::profil();});
+$router->map('GET', '/logout', function() {Users::logout();});
+// match current request
+$match = $router->match();
+
+if( $match && is_callable( $match['target'] ) ) {
+    call_user_func_array( $match['target'], $match['params'] );
+} else {
+    //header( $_SERVER["SERVER_PROTOCOL"] . ' 404 Not Found');
+    echo "404";
 }
-else
-{
-    header("Location: index.php?c=users&a=connexion");
-}
+?>

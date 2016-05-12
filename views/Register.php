@@ -6,9 +6,9 @@
  * Time: 14:18
  */ ?>
 
-<h1>S'inscire</h1>
+<h1>S'inscrire</h1>
 
-<form method="post" action="">
+<form method="post" action="z">
     <div>
         <p>
             Prénom:
@@ -40,5 +40,5 @@
     </div>
 
 
-    <a href="../WikYnov/index.php?c=users&a=connexion">Page de connexion</a>
+    <a href="">Page de connexion</a>
 </form>

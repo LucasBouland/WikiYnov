@@ -9,54 +9,57 @@ class Users
     {
         if (!empty($_POST['mail']) && !empty($_POST['mdp'])) {
             $email = $_POST["mail"];
-            $password = $_POST["mdp"];
+            $salt = "trololololo";
+            $saltmdp = $_POST['mdp'].$salt;
+            $password = sha1($saltmdp);
+
+            var_dump($password);
             if (User::exists($email, $password)) {
                 $user = User::findByCredentials($email, $password);
                 $_SESSION['user'] = $user;
                 $_SESSION['LoggedIn'] = true;
-                var_dump($_SESSION['user']); // objet, est perdu apres?? (1)
-// header("Location: ../index.php?c=users&a=home");
+                header('location:Home');
 
-                header("Location: index.php?c=users&a=home");
+                //self::home();
             } else "email ou mot de passe incorrect";
-        }
-        require 'views/users/connexion.php';
-
-        //require 'views/Home.php';
-
-        //header('Location:../../index.php');
+        }else echo "champs vides";
     }
     /* gere le php du profil */
-    public function profil()
+    public static function profil()
     {
-        var_dump($_SESSION['user']);
 
         if (!isset($_SESSION['LoggedIn'])) {
-            header("Location: index.php");
+            require 'views/users/connexion.php';
         }
+        else{
 
-       //$_SESSION['user'] =  User::findById($_SESSION['user']['id']);
-
-        require 'views/users/profil.php';
+            require 'views/users/profil.php';
+        }
     }
     /* redirection page d'accueil*/
-    public function home()
+    public static function home()
     {
        // var_dump($_SESSION['user']); // ici l'objet est perdu -> object(__PHP_Incomplete_Class) (3)
         require 'views/Home.php';
 
+
     }
     /* logout + redirection vers connexion */
-    public function logout()
+    public static function logout()
     {
         Session_destroy();
         require 'views/users/connexion.php';
-        header("Location: index.php?c=users&a=connexion");
+        //header("Location:/");
     }
 
-    public function register()
+    public static function signup()
     {
         require 'views/Register.php';
+    }
+    
+    public function register()
+    {
+    
 
         if (!empty($_POST['nom']) && !empty($_POST['prenom']) && !empty($_POST['email']) && !empty($_POST['mdp']) && !empty($_POST['confmdp'])) {
             if ($_POST['confmdp'] == $_POST['mdp']) {
@@ -81,10 +84,14 @@ class Users
                     }
                     else
                     {
-                        User::create($_POST['prenom'], $_POST['nom'], $_POST['email'], $_POST['mdp']);
+                        $salt = "trololololo";
+                        $saltmdp = $_POST['mdp'].$salt;
+                        $mdp = sha1($saltmdp);
+                        User::create($_POST['prenom'], $_POST['nom'], $_POST['email'], $mdp);
                         echo 'Inscription réussite';
+
                         require 'views/users/connexion.php';
-                        header("Location: index.php?c=users&a=connexion");
+
                     }
                 }
                 else

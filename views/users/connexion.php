@@ -7,7 +7,7 @@
 </head>
 <body>
 <div>
-    <form method="post" action="">
+    <form method="post" action="connexion">
         <input type="email" required name="mail" class="form-control input-sm chat-input"
                placeholder="Adresse mail"/>
         <input type="password" required name="mdp" class="form-control input-sm chat-input"
@@ -15,7 +15,7 @@
         <button type="submit" >Connexion</button>
     </form>
     <br>
-    <a href="../WikYnov/index.php?c=users&a=register">S'inscrire</a>
+    <a href="register">S'inscrire</a>
 <!--    <p name="incorrect" style="visibility: hidden">email ou mot de passe incorrect</p>-->
 </div>
 </body>

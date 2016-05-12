@@ -5,20 +5,9 @@
  * Date: 06/05/2016
  * Time: 09:51
  */
-if (isset($_SESSION['LoggedIn']) == true)
-{
-
-}
-else
-{
-   // header("Location: ../index.php");
-}
-var_dump($_SESSION['user']);
 ?>
 page accueil
 <br>
-<a href="../../index.php?c=users&a=profil">Profil</a>
+<a href="profil">Profil</a>
 <br>
-<a href="../../index.php?c=users&a=logout">deconnexion</a>
-
-
+<a href="logout">deconnexion</a>
