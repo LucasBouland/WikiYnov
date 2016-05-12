@@ -16,7 +16,6 @@
     </form>
     <br>
     <a href="register">S'inscrire</a>
-<!--    <p name="incorrect" style="visibility: hidden">email ou mot de passe incorrect</p>-->
 </div>
 </body>
 </html>

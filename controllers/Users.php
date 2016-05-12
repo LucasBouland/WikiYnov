@@ -4,7 +4,32 @@ require './models/User.php';
 
 class Users
 {
-    /* gere la connexion au site*/
+    /* redirection vers page profil*/
+    public static function profil()
+    {
+            require 'views/users/profil.php';
+    }
+
+    /* redirection vers accueil connecté */
+    public static function home()
+    {
+        require 'views/Home.php';
+    }
+
+    /* logout + redirection vers connexion */
+    public static function logout()
+    {
+        Session_destroy();
+        require 'views/users/connexion.php';
+    }
+
+    /*redirection vers la page d'inscription*/
+    public static function signup()
+    {
+        require 'views/Register.php';
+    }
+
+    /* connecte l'utilisateur et le redirige vers la page d'accueil */
     public function connexion()
     {
         if (!empty($_POST['mail']) && !empty($_POST['mdp'])) {
@@ -17,6 +42,7 @@ class Users
             if (User::exists($email, $password)) {
                 $user = User::findByCredentials($email, $password);
                 $_SESSION['user'] = $user;
+                $_SESSION['id'] = $user->getId();
                 $_SESSION['LoggedIn'] = true;
                 header('location:Home');
 
@@ -24,50 +50,17 @@ class Users
             } else "email ou mot de passe incorrect";
         }else echo "champs vides";
     }
-    /* gere le php du profil */
-    public static function profil()
-    {
 
-        if (!isset($_SESSION['LoggedIn'])) {
-            require 'views/users/connexion.php';
-        }
-        else{
-
-            require 'views/users/profil.php';
-        }
-    }
-    /* redirection page d'accueil*/
-    public static function home()
-    {
-       // var_dump($_SESSION['user']); // ici l'objet est perdu -> object(__PHP_Incomplete_Class) (3)
-        require 'views/Home.php';
-
-
-    }
-    /* logout + redirection vers connexion */
-    public static function logout()
-    {
-        Session_destroy();
-        require 'views/users/connexion.php';
-        //header("Location:/");
-    }
-
-    public static function signup()
-    {
-        require 'views/Register.php';
-    }
-    
+    /* créer un utilisateur dans la DB */
     public function register()
     {
-    
-
         if (!empty($_POST['nom']) && !empty($_POST['prenom']) && !empty($_POST['email']) && !empty($_POST['mdp']) && !empty($_POST['confmdp'])) {
             if ($_POST['confmdp'] == $_POST['mdp']) {
                 $email = $_POST['email'];
                 $validDomain = array('ynov.com');
                 if (filter_var($email, FILTER_VALIDATE_EMAIL))
                 {
-                   $explodedEMAIL = explode('@', $email);
+                    $explodedEMAIL = explode('@', $email);
                     $domain = array_pop($explodedEMAIL);
                     if (!in_array($domain, $validDomain))
                     {

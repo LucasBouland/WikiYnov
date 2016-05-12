@@ -95,7 +95,7 @@ class User
         $db = new coDB();
         $data = $db->pdo_query('SELECT * FROM users WHERE id_user = ? ', [$id]);
         $user = new User($data[0]->id_user, $data[0]->name, $data[0]->last_name, $data[0]->job, $data[0]->password, $data[0]->email);
-        return new $user;
+        return $user;
     }
     /**
      * @return mixed

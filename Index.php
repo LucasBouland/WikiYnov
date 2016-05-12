@@ -15,13 +15,20 @@ $db = new coDB();
 $router = new AltoRouter();
 $router->setBasePath('/WikYnov');
 
-$router->map('GET','/', function() { require_once 'views/users/connexion.php';});
+$router->map('GET', '/', function() { require_once 'views/users/connexion.php';});
+
+$router->map('GET', '/index', function() { require 'views/users/connexion.php';});// temp
+
 $router->map('POST','/connexion', function(){ $user = new Users(); $user->connexion();});
 $router->map('GET', '/register', function() {Users::signup();});
-$router->map('POST', '/z', function() {$user = new Users(); $user->register();});
+$router->map('POST','/z', function() {$user = new Users(); $user->register();});
 $router->map('GET', '/Home', function() {Users::home();});
 $router->map('GET', '/profil', function() {Users::profil();});
 $router->map('GET', '/logout', function() {Users::logout();});
+
+ $router->map('GET', '/profil/[i:id]', function($id){
+     Users::profil($id);
+ });
 // match current request
 $match = $router->match();
 
