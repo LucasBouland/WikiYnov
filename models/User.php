@@ -97,6 +97,11 @@ class User
         $user = new User($data[0]->id_user, $data[0]->name, $data[0]->last_name, $data[0]->job, $data[0]->password, $data[0]->email);
         return $user;
     }
+    public static function comfirm_mail($key,$mail){
+        $db =new coDB();
+        $data = $db->pdo_query('UPDATE membres SET key = ? WHERE email = ?',[$key,$mail]);
+
+    }
     /**
      * @return mixed
      */

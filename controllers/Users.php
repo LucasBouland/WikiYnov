@@ -4,32 +4,7 @@ require './models/User.php';
 
 class Users
 {
-    /* redirection vers page profil*/
-    public static function profil()
-    {
-            require 'views/users/profil.php';
-    }
-
-    /* redirection vers accueil connecté */
-    public static function home()
-    {
-        require 'views/Home.php';
-    }
-
-    /* logout + redirection vers connexion */
-    public static function logout()
-    {
-        Session_destroy();
-        require 'views/users/connexion.php';
-    }
-
-    /*redirection vers la page d'inscription*/
-    public static function signup()
-    {
-        require 'views/Register.php';
-    }
-
-    /* connecte l'utilisateur et le redirige vers la page d'accueil */
+    /* gere la connexion au site + page d'arrivée initiale*/
     public function connexion()
     {
         if (!empty($_POST['mail']) && !empty($_POST['mdp'])) {
@@ -38,29 +13,54 @@ class Users
             $saltmdp = $_POST['mdp'].$salt;
             $password = sha1($saltmdp);
 
-            var_dump($password);
             if (User::exists($email, $password)) {
                 $user = User::findByCredentials($email, $password);
                 $_SESSION['user'] = $user;
-                $_SESSION['id'] = $user->getId();
+                $_SESSION['id']=$user->getId();
                 $_SESSION['LoggedIn'] = true;
                 header('location:Home');
-
-                //self::home();
-            } else "email ou mot de passe incorrect";
-        }else echo "champs vides";
+            }
+            else
+            {
+                echo "email ou mot de passe incorrect";
+                require 'views/users/connexion.php';
+            }
+        }
     }
-
+    /* redirection profil */
+    public static function profil()
+    {
+            require 'views/users/profil.php';
+    }
+    /* redirection page d'accueil*/
+    public static function home()
+    {
+        require 'views/Home.php';
+    }
+    /* logout + redirection vers connexion */
+    public static function logout()
+    {
+        Session_destroy();
+        require 'views/users/connexion.php';
+        header("location:index");
+    }
+    /* redirection page de connexion */
+    public static function signup()
+    {
+        require 'views/Register.php';
+    }
     /* créer un utilisateur dans la DB */
     public function register()
     {
+    
+
         if (!empty($_POST['nom']) && !empty($_POST['prenom']) && !empty($_POST['email']) && !empty($_POST['mdp']) && !empty($_POST['confmdp'])) {
             if ($_POST['confmdp'] == $_POST['mdp']) {
                 $email = $_POST['email'];
                 $validDomain = array('ynov.com');
                 if (filter_var($email, FILTER_VALIDATE_EMAIL))
                 {
-                    $explodedEMAIL = explode('@', $email);
+                   $explodedEMAIL = explode('@', $email);
                     $domain = array_pop($explodedEMAIL);
                     if (!in_array($domain, $validDomain))
                     {
@@ -84,8 +84,8 @@ class Users
                         echo 'Inscription réussite';
 
                         require 'views/users/connexion.php';
-
-                    }
+                        header('location:index');
+                  }
                 }
                 else
                 {

@@ -1,0 +1,76 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Pierre
+ * Date: 12/05/2016
+ * Time: 22:21
+ */
+if (!isset($_SESSION['LoggedIn'])) {
+
+    header('Location: /WikYnov/index');
+    return;
+}
+$user = User::findById($_SESSION['id']);
+$article= Article::findById($_SESSION['article']);
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wikynov</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+<body>
+<!--        debut du header -->
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand"><span class="glyphicon glyphicon-user"></span><div  style="font-size: small; float: right;margin-left: 10px;"> connected as <br><?php echo $user->getFirstName() . " " . $user->getName();?></div></a>
+        </div>
+
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="../Home">Accueil</a></li>
+                <li><a href="../profil/<?= $_SESSION['id'];?>">Profil</a></li>
+                <li class="active"><a href="../view">Articles</a></li>
+                <?php
+                if($user->getJob()!= "abonne"){
+                    echo "<li><a href=\"../ajoute\">Ajout d'article</a></li>";
+                }
+                ?>
+                <li style="float: right"><a href="../logout">deconnexion</a></li>
+            </ul>
+        </div>
+    </div><!-- /.container-fluid -->
+    </nav>
+<?php echo "<div class='col-xs-8 col-xs-offset-1'><h2>";
+      echo $article->getName();
+        echo "</h2></a><div style='float: left'>by ";
+    echo $article->getAuteur();
+    echo "</div><br><div name=\"article\" id=\"editor\" class='col-xs-12' style='border: 1px solid;' readonly>";
+    echo $article->getDescription();
+    echo "</div><br><div style='float: right'>";
+    echo $article->getDate();
+    echo "</div></div>"?>
+<?php if($user->getJob()== "administrateur"){
+    echo "<form  method=\"get\" action=\"../delete/";
+    echo $article->getName();
+    echo "\"><button class=\"btn btn-primary btn-md\" type=\"submit\" style=\"float: right\">Supprimer l\'article</button></form>";
+}
+if($user->getJob()== "auteur" && $user->getFirstName()." ".$user->getName() == $article->getName()){
+    echo "<form  method=\"get\" action=\"../delete/ ";
+    echo $article->getName();
+    echo "\"><button class=\"btn btn-primary btn-md\" type=\"submit\" style=\"float: right\">Supprimer l\'article</button></form>";
+}
+?>
+
+    </body>
+</html>
